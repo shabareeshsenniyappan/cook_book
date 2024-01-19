@@ -1,0 +1,108 @@
+.imageStyle {
+  height: 290px;
+  width: 320px;
+  border-radius: 5px;
+}
+.imageContainer {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  width: 96%;
+  margin: auto;
+  padding: 25px;
+  border-radius: 10px;
+  display: flex;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.deatilaContainer {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  width: 96%;
+  margin: 20px auto;
+  padding: 25px;
+  border-radius: 10px;
+}
+.deatailsContainer {
+  margin: 40px;
+}
+
+.infoContainer {
+  width: 50%;
+  text-align: center;
+  margin: 12px auto;
+}
+
+.infoName {
+  font-size: 42px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
+}
+
+.infoNutriContainer {
+  margin-top: 42px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.cardInfo {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 2px;
+}
+
+.cardIcon {
+  width: 20px;
+  height: 20px;
+}
+.cardIconPack {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.ingHeading {
+  font-size: 26px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.ingCont {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin: 12px auto;
+}
+
+.ingUnit {
+  text-align: center;
+  background-color: #2f2f2e;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 25px;
+}
+
+.ingDetailTex {
+  font-size: 18px;
+  font-weight: 400;
+  text-decoration: none;
+  color: inherit;
+}
+
+@media (max-width: 750px) {
+  .imageContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+  .deatailsContainer {
+    margin: 0;
+  }
+  .infoContainer {
+    margin: 0;
+    width: 100%;
+  }
+  .infoNutriContainer {
+    flex-wrap: wrap;
+  }
+}

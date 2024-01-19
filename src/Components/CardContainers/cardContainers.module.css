@@ -1,0 +1,13 @@
+.containerHero {
+  width: 90dvw;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 40px auto;
+  gap: 1dvw;
+}
+
+.heading {
+  margin: 28px;
+  font-size: 29px;
+  font-weight: 600;
+}
