@@ -42,7 +42,6 @@ export const getRecipeDetail = async (id) => {
 };
 
 export const getRecipesOnSearch = async (query, offSet, filetValues) => {
-  console.log(filetValues, "mmmm111");
   try {
     const res = axiosInstance.get(`/complexSearch`, {
       params: {
