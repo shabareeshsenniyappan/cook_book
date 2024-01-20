@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 function RecipeCard({ recDetails, favClicked, isFav }) {
   const navigate = useNavigate();
 
+  // Function to handel fav recipe
   const onFavClick = (e) => {
     e.stopPropagation();
     favClicked(recDetails?.id);

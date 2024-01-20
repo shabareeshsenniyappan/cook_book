@@ -24,12 +24,13 @@ function SearchBar({ handleEnter }) {
       setFilteredOptions(res?.data)
     );
   };
-
+  // Function to navigate to details screen with the ID
   const onItemClick = (id, title) => {
     setSearchTerm(title);
     navigate(`/detail/${id}`);
   };
 
+  // Function to handel search box on press enter key
   const handleEnterKey = (e) => {
     if (e.key === "Enter") {
       handleEnter(e?.target?.value);

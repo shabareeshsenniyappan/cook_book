@@ -13,7 +13,7 @@ function CardContainers({
     <div>
       <div className={styles.heading}>{heading}</div>
       {dataToShown.length > 0 ? (
-        <div className={styles.containerHero}>
+        <div className={isFav ? styles.containerHero2 : styles.containerHero}>
           {dataToShown?.map((rec) => (
             <RecipeCard
               isFav={isFav}
@@ -26,6 +26,7 @@ function CardContainers({
           ))}
         </div>
       ) : (
+        //on Search show message if cant find recipe
         isSearch && (
           <div className={styles.noRecipe}>Sorry! No Recipes Found</div>
         )

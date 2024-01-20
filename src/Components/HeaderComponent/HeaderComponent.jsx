@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function HeaderComponent() {
   const navigate = useNavigate();
+  // Function to handel navigation to home screen
   const onLogClick = () => {
     navigate("/home");
   };

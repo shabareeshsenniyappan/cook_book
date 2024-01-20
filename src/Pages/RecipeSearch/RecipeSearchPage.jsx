@@ -7,6 +7,8 @@ import SearchBar from "../../Components/SearchBar/SearchBar";
 import styles from "./recipeSearch.module.css";
 import LoadingComponent from "../../Components/LoadingComponent/LoadingComponent";
 import filter from "../../Utils/Icons/filter.png";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function RecipeSearchPage() {
   const [randomRec, setrandomRec] = useState([]);
@@ -14,7 +16,6 @@ function RecipeSearchPage() {
   const [loading, setloading] = useState(false);
   const [searchedRecipe, setsearchedRecipe] = useState("");
   const [searchedRecipeValue, setsearchedRecipeValue] = useState([]);
-
   const [offSet, setoffSet] = useState({ offset: 0, total: 0 });
   const [showFilter, setshowFilter] = useState(false);
   const [filetValues, setfiletValues] = useState({
@@ -22,6 +23,14 @@ function RecipeSearchPage() {
     cuisines: "",
     type: "",
   });
+
+  useEffect(() => {
+    if (!searchedRecipe) {
+      setloading(true);
+      loadRandomRecipies();
+      setloading(false);
+    }
+  }, []);
 
   // Function to handle checkbox change
   const handleCheckboxChange = (e) => {
@@ -33,14 +42,8 @@ function RecipeSearchPage() {
         [e.target.name]: e.target.value.toLowerCase(),
       });
   };
-  useEffect(() => {
-    if (!searchedRecipe) {
-      setloading(true);
-      loadRandomRecipies();
-      setloading(false);
-    }
-  }, []);
 
+  // Function to load random recipe on intial render
   const loadRandomRecipies = () => {
     getRandomRecipes(10)
       .then((e) => {
@@ -49,6 +52,15 @@ function RecipeSearchPage() {
       .catch(() => setloading(false));
   };
 
+  // Function to remove fav from list-section
+  const onDeFavClick = (idToFav) => {
+    const favItems = favRec.filter((item) => item.id !== idToFav);
+    setFavRec([...favItems]);
+    //kick the toaster
+    toast.error("Favourite Removed");
+  };
+
+  // Function to add fav to list-section
   const onFavClick = (idToFav) => {
     if (searchedRecipe) {
       const favItems = searchedRecipeValue.filter(
@@ -59,8 +71,11 @@ function RecipeSearchPage() {
       const favItems = randomRec.filter((item) => item.id === idToFav);
       setFavRec([...favRec, ...favItems]);
     }
+    //kick the toaster
+    toast.success("Favourite Added");
   };
 
+  // Function to load recipes based on the search input
   const onSearchEntered = async (e) => {
     setsearchedRecipe(e);
     setloading(true);
@@ -76,6 +91,7 @@ function RecipeSearchPage() {
       .catch((res) => setloading(false));
   };
 
+  // Function to handel infinite scroll on load recipes based on the search input
   const onSearchScrol = () => {
     getRecipesOnSearch(searchedRecipe, offSet?.offset + 1, filetValues).then(
       (res) => {
@@ -88,6 +104,7 @@ function RecipeSearchPage() {
     );
   };
 
+  // Function to handel filtersl on load recipes based on the search input
   const onSearchFilter = () => {
     setloading(true);
     getRecipesOnSearch(searchedRecipe, offSet?.offset + 1, filetValues)
@@ -103,6 +120,7 @@ function RecipeSearchPage() {
     setshowFilter(false);
   };
 
+  //Function to handel open and close filter tab
   const onFilterClick = () => {
     setshowFilter((prev) => !prev);
   };
@@ -111,6 +129,7 @@ function RecipeSearchPage() {
     <div>
       <HeaderComponent />
 
+      <ToastContainer />
       <div className={styles.searchBar}>
         <div></div>
         <SearchBar handleEnter={onSearchEntered} />
@@ -186,7 +205,7 @@ function RecipeSearchPage() {
         <CardContainers
           dataToShown={favRec}
           heading={"Favourite  Recipes"}
-          favClickedComp={() => {}}
+          favClickedComp={onDeFavClick}
           isFav={true}
         />
       )}

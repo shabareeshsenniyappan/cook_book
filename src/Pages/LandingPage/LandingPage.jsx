@@ -3,6 +3,7 @@ import styles from "./landingPage.module.css";
 import { useNavigate } from "react-router-dom";
 function LandingPage() {
   const navigate = useNavigate();
+  // Function to handel navigation to home page
   const getIn = () => {
     navigate("/home");
   };

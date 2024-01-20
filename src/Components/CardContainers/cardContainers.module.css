@@ -7,6 +7,14 @@
   justify-content: space-evenly;
 }
 
+.containerHero2 {
+  width: 90dvw;
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  gap: 1dvw;
+}
+
 .heading {
   margin: 28px;
   font-size: 29px;

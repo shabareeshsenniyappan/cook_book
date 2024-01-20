@@ -15,6 +15,7 @@ function RecipeDetails() {
   const [resDetail, setresDetail] = useState();
   const [loading, setloading] = useState(false);
 
+  // UseEffect to handel load details on recipe
   useEffect(() => {
     window.scrollTo(0, 0);
     setloading(true);
