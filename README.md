@@ -20,6 +20,8 @@
 
 # `Autocomplete Search Box` is implemented .
 
+# Imges are loaded with `Lazy Loading`
+
 # we can filter the search by the filter provided on right top for specific cusine or diet by checking `vegetarian` , `Indian` ,`Snacks`, `Breakfast` from filter menu.
 
 # `infinite scroll` is implemented to gain the performance improvement.

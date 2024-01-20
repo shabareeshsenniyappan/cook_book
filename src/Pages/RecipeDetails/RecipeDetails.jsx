@@ -6,7 +6,6 @@ import calories from "../../Utils/Icons/calories.png";
 import vegetarian from "../../Utils/Icons/vegetarian.png";
 import nonVeg from "../../Utils/Icons/non-veg.png";
 import sugar from "../../Utils/Icons/sugar.png";
-import nonFav from "../../Utils/Icons/fav.png";
 import DOMPurify from "dompurify";
 import { useParams } from "react-router-dom";
 import { getRecipeDetail } from "../../Utils/apiServices";

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { searchAutoComplete } from "../../Utils/apiServices";
 import "./searchBar.css";
 import { debounce } from "../../Utils/helperFunctions";
