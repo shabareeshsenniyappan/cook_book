@@ -25,6 +25,7 @@ function LandingPage() {
               Get Started
             </button>
           </div>
+          <div className={styles.hint}>CLICK THE BUTTON TO EXPLORE !!!</div>
         </div>
         <div className={styles.landingContainerSection2}>
           <img

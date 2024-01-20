@@ -86,6 +86,9 @@
   object-fit: cover;
 }
 
+.hint {
+  color: #fff;
+}
 /* Media query for smaller screens */
 @media (max-width: 768px) {
   .landingContentContainer {

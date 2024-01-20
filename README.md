@@ -1,70 +1,31 @@
-# Getting Started with Create React App
+# To Run The App Run The Following Code
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
+### `npm install`
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# Walk Through Of The App
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### `Screen -1 Landing Screen`
 
-### `npm test`
+# Click on the `Get Started ` button on the screen to search for recipes.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `Screen -2 Home Screen`
 
-### `npm run build`
+# Initially random recipes are populated from the API
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# We can make them `favourite by tapping the favourite` icon on the top right on the recipe card
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# we can search for the recipe with the `search box` on the top and can make them favourite by tapping fav icon
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# `Autocomplete Search Box` is implemented .
 
-### `npm run eject`
+# we can filter the search by the filter provided on right top for specific cusine or diet by checking `vegetarian` , `Indian` ,`Snacks`, `Breakfast` from filter menu.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# `infinite scroll` is implemented to gain the performance improvement.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# `Click on the card for Detail` of the recipe
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### `Screen -3 Detail Screen`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# we can see the `detailed view` of the recipe here.
