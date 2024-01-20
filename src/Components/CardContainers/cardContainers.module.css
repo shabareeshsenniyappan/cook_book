@@ -2,8 +2,9 @@
   width: 90dvw;
   display: flex;
   flex-wrap: wrap;
-  margin: 40px auto;
+  margin: auto;
   gap: 1dvw;
+  justify-content: space-evenly;
 }
 
 .heading {
@@ -19,4 +20,10 @@
   font-size: 29px;
   font-weight: 600;
   color: rgb(100, 93, 93);
+}
+
+@media (max-width: 768px) {
+  .containerHero {
+    margin: auto;
+  }
 }
