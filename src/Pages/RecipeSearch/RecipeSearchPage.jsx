@@ -91,6 +91,7 @@ function RecipeSearchPage() {
           loader={<LoadingComponent />}
         >
           <CardContainers
+            isSearch={true}
             dataToShown={searchedRecipeValue}
             heading={`Search result - ${searchedRecipe}`}
             favClickedComp={onFavClick}

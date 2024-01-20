@@ -2,7 +2,13 @@ import React, { memo } from "react";
 import styles from "./cardContainers.module.css";
 import RecipeCard from "../RecipeCard/RecipeCard";
 
-function CardContainers({ dataToShown, heading, favClickedComp, isFav }) {
+function CardContainers({
+  dataToShown,
+  heading,
+  favClickedComp,
+  isFav,
+  isSearch,
+}) {
   return (
     <div>
       <div className={styles.heading}>{heading}</div>
@@ -20,7 +26,9 @@ function CardContainers({ dataToShown, heading, favClickedComp, isFav }) {
           ))}
         </div>
       ) : (
-        <div className={styles.noRecipe}>Sorry! No Recipes Found</div>
+        isSearch && (
+          <div className={styles.noRecipe}>Sorry! No Recipes Found</div>
+        )
       )}
     </div>
   );
