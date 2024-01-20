@@ -4,13 +4,15 @@ import "./searchBar.css";
 import { debounce } from "../../Utils/helperFunctions";
 import { useNavigate } from "react-router-dom";
 
-function SearchBar() {
+function SearchBar({ handleEnter }) {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredOptions, setFilteredOptions] = useState([]);
+  const [showDrop, setshowDrop] = useState(true);
 
   //triggered on the search-box value change
   const onInputChange = (e) => {
+    setshowDrop(true);
     setSearchTerm(e?.target?.value);
     //Debounce delay of 500ms
     debounce(onSearch(e), 600);
@@ -28,17 +30,25 @@ function SearchBar() {
     navigate(`/detail/${id}`);
   };
 
+  const handleEnterKey = (e) => {
+    if (e.key === "Enter") {
+      handleEnter(e?.target?.value);
+      setshowDrop(false);
+    }
+  };
+
   return (
     <div className="search-container">
       <input
         type={"text"}
         value={searchTerm}
         onChange={onInputChange}
+        onKeyDown={handleEnterKey}
         placeholder={"Search For the recipe"}
         className={"search-input"}
       />
 
-      {filteredOptions && (
+      {filteredOptions && showDrop && (
         <ul className={"suggestions-list"}>
           {filteredOptions?.map((option) => (
             <li onClick={() => onItemClick(option?.id)} key={option?.id}>

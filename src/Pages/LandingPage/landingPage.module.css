@@ -35,8 +35,40 @@
 .landingContainerSection1 {
   text-align: center;
   background-color: #2f2f2e;
+  display: flex;
+  flex-direction: column;
 }
 
+.sec1 {
+  color: #fff;
+  text-transform: uppercase;
+  text-align: start;
+  margin: 12px;
+  font-size: 28px;
+}
+
+.sec2 {
+  display: flex;
+  flex-wrap: wrap;
+  color: #fff;
+  text-transform: capitalize;
+  text-align: start;
+  margin: 20px;
+  font-size: 78px;
+  font-weight: 800;
+}
+
+.newButton {
+  background-color: #fff;
+  color: #2f2f2e;
+  padding: 18px;
+  font-size: 22px;
+  font-weight: 600;
+  border: none;
+  border-radius: 55px;
+  margin: 28px;
+  cursor: pointer;
+}
 .landingContainerSection2 {
   margin-left: 20px;
   display: grid;
@@ -60,7 +92,7 @@
     grid-template-columns: 1fr;
   }
   .landingContainerSection1 {
-    height: 250px;
+    /* height: 250px; */
     margin: 10px;
     width: 95dvw;
   }

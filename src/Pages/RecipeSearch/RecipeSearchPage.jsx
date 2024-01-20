@@ -2,21 +2,25 @@ import React, { useEffect, useState } from "react";
 import HeaderComponent from "../../Components/HeaderComponent/HeaderComponent";
 import InfiniteScroll from "react-infinite-scroll-component";
 import CardContainers from "../../Components/CardContainers/CardContainers";
-import { getRandomRecipes } from "../../Utils/apiServices";
+import { getRandomRecipes, getRecipesOnSearch } from "../../Utils/apiServices";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import styles from "./recipeSearch.module.css";
 import LoadingComponent from "../../Components/LoadingComponent/LoadingComponent";
 
 function RecipeSearchPage() {
-  const [searchedRecipe, setsearchedRecipe] = useState();
   const [randomRec, setrandomRec] = useState([]);
   const [favRec, setFavRec] = useState([]);
   const [loading, setloading] = useState(false);
+  const [searchedRecipe, setsearchedRecipe] = useState("");
+  const [searchedRecipeValue, setsearchedRecipeValue] = useState([]);
 
+  const [offSet, setoffSet] = useState({ offset: 0, total: 0 });
   useEffect(() => {
-    setloading(true);
-    loadRandomRecipies();
-    setloading(false);
+    if (!searchedRecipe) {
+      setloading(true);
+      loadRandomRecipies();
+      setloading(false);
+    }
   }, []);
 
   const loadRandomRecipies = () => {
@@ -27,31 +31,71 @@ function RecipeSearchPage() {
       .catch(() => setloading(false));
   };
 
-  const onFavClick = (idToDelete) => {
-    const updatedItems = randomRec.filter((item) => item.id !== idToDelete);
-    const favItems = randomRec.filter((item) => item.id === idToDelete);
-    setrandomRec([...updatedItems]);
-    setFavRec([...favRec, ...favItems]);
+  const onFavClick = (idToFav) => {
+    if (searchedRecipe) {
+      const favItems = searchedRecipeValue.filter(
+        (item) => item.id === idToFav
+      );
+      setFavRec([...favRec, ...favItems]);
+    } else {
+      const favItems = randomRec.filter((item) => item.id === idToFav);
+      setFavRec([...favRec, ...favItems]);
+    }
   };
 
-  const onSearchEntered = () => {};
+  const onSearchEntered = (e) => {
+    setsearchedRecipe(e);
+    setloading(true);
+    getRecipesOnSearch(e, offSet?.offset)
+      .then((res) => {
+        setoffSet({
+          offset: res?.data?.offset,
+          total: res?.data?.totalResults,
+        });
+        setsearchedRecipeValue([...res?.data?.results]);
+        setloading(false);
+      })
+      .catch((res) => setloading(false));
+  };
+
+  const onSearchScrol = () => {
+    getRecipesOnSearch(searchedRecipe, offSet?.offset + 1).then((res) => {
+      setoffSet({ offset: res?.data?.offset, total: res?.data?.totalResults });
+      setsearchedRecipeValue([...searchedRecipeValue, ...res?.data?.results]);
+    });
+  };
+
+  console.log(searchedRecipeValue, "searchVal");
   return (
     <div>
       <HeaderComponent />
 
       <div className={styles.searchBar}>
-        <SearchBar />
+        <SearchBar handleEnter={onSearchEntered} />
       </div>
       {favRec?.length > 0 && (
         <CardContainers
           dataToShown={favRec}
-          heading={"Favro  Recipies"}
+          heading={"Favourite  Recipes"}
           favClickedComp={() => {}}
           isFav={true}
         />
       )}
       {loading ? (
         <LoadingComponent />
+      ) : searchedRecipe ? (
+        <InfiniteScroll
+          dataLength={searchedRecipeValue.length}
+          next={onSearchScrol}
+          hasMore={offSet.total / 10 > offSet.offset}
+          loader={<LoadingComponent />}
+        >
+          <CardContainers
+            dataToShown={searchedRecipeValue}
+            heading={`Search result - ${searchedRecipe}`}
+            favClickedComp={onFavClick}
+          />
+        </InfiniteScroll>
       ) : (
         <InfiniteScroll
           dataLength={randomRec.length}
@@ -61,7 +105,7 @@ function RecipeSearchPage() {
         >
           <CardContainers
             dataToShown={randomRec}
-            heading={"Find The New Recipies"}
+            heading={"Not Sure What To Cook ?"}
             favClickedComp={onFavClick}
           />
         </InfiniteScroll>

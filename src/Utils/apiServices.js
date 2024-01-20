@@ -16,7 +16,7 @@ export const searchAutoComplete = async (txt) => {
   }
 };
 
-export const getRandomRecipes = async (num = 10, offset = 1) => {
+export const getRandomRecipes = async (num = 6) => {
   try {
     const res = axiosInstance.get("/random", {
       params: {
@@ -42,11 +42,13 @@ export const getRecipeDetail = async (id) => {
   }
 };
 
-export const getRecipesOnSearch = async (query) => {
+export const getRecipesOnSearch = async (query, offSet) => {
   try {
     const res = axiosInstance.get(`/complexSearch`, {
       params: {
         query: query,
+        offset: offSet,
+        addRecipeInformation: true,
       },
     });
     return res;

@@ -22,6 +22,7 @@ function RecipeCard({ recDetails, favClicked, isFav }) {
       onClick={() => navigate(`/detail/${recDetails?.id}`)}
     >
       <img
+        loading={"lazy"}
         src={recDetails?.image}
         alt={recDetails?.title}
         className={styles.cardImage}

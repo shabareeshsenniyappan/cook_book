@@ -1,7 +1,11 @@
 import React from "react";
 import styles from "./landingPage.module.css";
-
+import { useNavigate } from "react-router-dom";
 function LandingPage() {
+  const navigate = useNavigate();
+  const getIn = () => {
+    navigate("/home");
+  };
   return (
     <div className={styles.landingPageHeroContainer}>
       <section className={styles.landingHeader}>
@@ -12,7 +16,16 @@ function LandingPage() {
       </section>
 
       <div className={styles.landingContentContainer}>
-        <div className={styles.landingContainerSection1}> Foodie!</div>
+        <div className={styles.landingContainerSection1}>
+          {" "}
+          <div className={styles.sec1}>unlimited recipes</div>
+          <div className={styles.sec2}>Start Cooking</div>
+          <div className={styles.center}>
+            <button className={styles.newButton} onClick={getIn}>
+              Get Started
+            </button>
+          </div>
+        </div>
         <div className={styles.landingContainerSection2}>
           <img
             className={styles.landingContainerImages}

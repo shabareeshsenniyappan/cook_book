@@ -6,18 +6,22 @@ function CardContainers({ dataToShown, heading, favClickedComp, isFav }) {
   return (
     <div>
       <div className={styles.heading}>{heading}</div>
-      <div className={styles.containerHero}>
-        {dataToShown?.map((rec) => (
-          <RecipeCard
-            isFav={isFav}
-            recDetails={rec}
-            key={rec?.id}
-            favClicked={(e) => {
-              favClickedComp(e);
-            }}
-          />
-        ))}
-      </div>
+      {dataToShown.length > 0 ? (
+        <div className={styles.containerHero}>
+          {dataToShown?.map((rec) => (
+            <RecipeCard
+              isFav={isFav}
+              recDetails={rec}
+              key={rec?.id}
+              favClicked={(e) => {
+                favClickedComp(e);
+              }}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className={styles.noRecipe}>Sorry! No Recipes Found</div>
+      )}
     </div>
   );
 }

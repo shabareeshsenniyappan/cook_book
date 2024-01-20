@@ -11,3 +11,12 @@
   font-size: 29px;
   font-weight: 600;
 }
+
+.noRecipe {
+  /* position: relative; */
+  margin-top: 155px;
+  text-align: center;
+  font-size: 29px;
+  font-weight: 600;
+  color: rgb(100, 93, 93);
+}
