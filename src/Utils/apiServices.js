@@ -42,13 +42,17 @@ export const getRecipeDetail = async (id) => {
   }
 };
 
-export const getRecipesOnSearch = async (query, offSet) => {
+export const getRecipesOnSearch = async (query, offSet, filetValues) => {
+  console.log(filetValues, "mmmm111");
   try {
     const res = axiosInstance.get(`/complexSearch`, {
       params: {
         query: query,
         offset: offSet,
         addRecipeInformation: true,
+        type: filetValues?.type,
+        diet: filetValues?.diet,
+        cuisine: filetValues?.cuisine,
       },
     });
     return res;

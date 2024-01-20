@@ -1,5 +1,40 @@
 .searchBar {
   margin-top: 20px;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
+}
+.filterContiner {
+  position: relative;
+}
+.filterIcon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.filterDetails {
+  position: absolute;
+  background-color: #fff;
+  width: 320px;
+  height: 200px;
+  right: -1px;
+  z-index: 1;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 6px;
+}
+.checkboxContainer {
+  margin: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filterButton {
+  background-color: #000;
+  color: #fff;
+  padding: 6px;
+  float: right;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }

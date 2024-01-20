@@ -6,6 +6,7 @@ import { getRandomRecipes, getRecipesOnSearch } from "../../Utils/apiServices";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import styles from "./recipeSearch.module.css";
 import LoadingComponent from "../../Components/LoadingComponent/LoadingComponent";
+import filter from "../../Utils/Icons/filter.png";
 
 function RecipeSearchPage() {
   const [randomRec, setrandomRec] = useState([]);
@@ -15,6 +16,23 @@ function RecipeSearchPage() {
   const [searchedRecipeValue, setsearchedRecipeValue] = useState([]);
 
   const [offSet, setoffSet] = useState({ offset: 0, total: 0 });
+  const [showFilter, setshowFilter] = useState(false);
+  const [filetValues, setfiletValues] = useState({
+    diet: "",
+    cuisines: "",
+    type: "",
+  });
+
+  // Function to handle checkbox change
+  const handleCheckboxChange = (e) => {
+    if (filetValues?.[e.target.name].includes(e?.target?.value))
+      setfiletValues({ ...filetValues, [e.target.name]: "" });
+    else
+      setfiletValues({
+        ...filetValues,
+        [e.target.name]: e.target.value.toLowerCase(),
+      });
+  };
   useEffect(() => {
     if (!searchedRecipe) {
       setloading(true);
@@ -24,7 +42,7 @@ function RecipeSearchPage() {
   }, []);
 
   const loadRandomRecipies = () => {
-    getRandomRecipes(10, 1)
+    getRandomRecipes(10)
       .then((e) => {
         setrandomRec([...randomRec, ...e?.data?.recipes]);
       })
@@ -43,10 +61,10 @@ function RecipeSearchPage() {
     }
   };
 
-  const onSearchEntered = (e) => {
+  const onSearchEntered = async (e) => {
     setsearchedRecipe(e);
     setloading(true);
-    getRecipesOnSearch(e, offSet?.offset)
+    await getRecipesOnSearch(e, offSet?.offset, filetValues)
       .then((res) => {
         setoffSet({
           offset: res?.data?.offset,
@@ -59,20 +77,111 @@ function RecipeSearchPage() {
   };
 
   const onSearchScrol = () => {
-    getRecipesOnSearch(searchedRecipe, offSet?.offset + 1).then((res) => {
-      setoffSet({ offset: res?.data?.offset, total: res?.data?.totalResults });
-      setsearchedRecipeValue([...searchedRecipeValue, ...res?.data?.results]);
-    });
+    getRecipesOnSearch(searchedRecipe, offSet?.offset + 1, filetValues).then(
+      (res) => {
+        setoffSet({
+          offset: res?.data?.offset,
+          total: res?.data?.totalResults,
+        });
+        setsearchedRecipeValue([...searchedRecipeValue, ...res?.data?.results]);
+      }
+    );
   };
 
-  console.log(searchedRecipeValue, "searchVal");
+  const onSearchFilter = () => {
+    setloading(true);
+    getRecipesOnSearch(searchedRecipe, offSet?.offset + 1, filetValues)
+      .then((res) => {
+        setoffSet({
+          offset: res?.data?.offset,
+          total: res?.data?.totalResults,
+        });
+        setsearchedRecipeValue([...res?.data?.results]);
+        setloading(false);
+      })
+      .catch((err) => setloading(false));
+    setshowFilter(false);
+  };
+
+  const onFilterClick = () => {
+    setshowFilter((prev) => !prev);
+  };
+
   return (
     <div>
       <HeaderComponent />
 
       <div className={styles.searchBar}>
+        <div></div>
         <SearchBar handleEnter={onSearchEntered} />
+        {searchedRecipe ? (
+          <div className={styles.filterContiner}>
+            <img
+              className={styles.filterIcon}
+              src={filter}
+              alt={"filter"}
+              onClick={onFilterClick}
+            />
+
+            {showFilter && (
+              <div className={styles.filterDetails}>
+                <div className={styles.checkboxContainer}>
+                  <label>Vegetarian</label>
+                  <div className={styles.remove}>
+                    {" "}
+                    <input
+                      type={"checkbox"}
+                      checked={filetValues?.diet?.includes("vegetarian")}
+                      name={"diet"}
+                      value={"vegetarian"}
+                      onChange={handleCheckboxChange}
+                    />
+                  </div>
+                </div>
+                <div className={styles.checkboxContainer}>
+                  <label>Indian</label>
+                  <input
+                    type={"checkbox"}
+                    checked={filetValues?.cuisines?.includes("indian")}
+                    name={"cuisines"}
+                    value={"indian"}
+                    onChange={handleCheckboxChange}
+                  />
+                </div>
+                <div className={styles.checkboxContainer}>
+                  <label>Snack</label>
+                  <input
+                    type={"checkbox"}
+                    checked={filetValues?.type?.includes("snack")}
+                    name={"type"}
+                    value={"snack"}
+                    onChange={handleCheckboxChange}
+                  />
+                </div>
+                <div className={styles.checkboxContainer}>
+                  <label>Breakfast</label>
+                  <input
+                    type={"checkbox"}
+                    checked={filetValues?.type?.includes("breakfast")}
+                    name={"type"}
+                    value={"breakfast"}
+                    onChange={handleCheckboxChange}
+                  />
+                </div>
+                <button
+                  onClick={onSearchFilter}
+                  className={styles.filterButton}
+                >
+                  Filter
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
+
       {favRec?.length > 0 && (
         <CardContainers
           dataToShown={favRec}
