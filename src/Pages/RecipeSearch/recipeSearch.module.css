@@ -38,3 +38,19 @@
   border-radius: 5px;
   cursor: pointer;
 }
+.switchLabel {
+  margin: 8px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .searchBar {
+    flex-direction: column;
+    gap: 25px;
+    margin: 5px;
+  }
+  .filterContiner {
+    margin-left: auto;
+  }
+}

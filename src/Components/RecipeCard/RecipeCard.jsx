@@ -9,7 +9,7 @@ import fav from "../../Utils/Icons/fav.png";
 import nonFav from "../../Utils/Icons/non-fav.png";
 import { useNavigate } from "react-router-dom";
 
-function RecipeCard({ recDetails, favClicked, isFav }) {
+function RecipeCard({ recDetails, favClicked, isFav, isIng }) {
   const navigate = useNavigate();
 
   // Function to handel fav recipe
@@ -28,40 +28,63 @@ function RecipeCard({ recDetails, favClicked, isFav }) {
         alt={recDetails?.title}
         className={styles.cardImage}
       />
+
       <div className={styles.pad}>
         <div className={styles.cardTitle}>{recDetails?.title}</div>
-        <span
-          className={styles.cardDesc}
-          dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(recDetails?.summary),
-          }}
-        ></span>
-
-        <div className={styles.cardInfo}>
-          <div className={styles.cardIconPack}>
-            <img className={styles.cardIcon} src={clock} alt={"clock"} />
-            <span className={styles.cardIconInfo}>
-              {recDetails?.readyInMinutes}min
-            </span>
-          </div>
-          <div className={styles.cardIconPack}>
-            <img className={styles.cardIcon} src={score} alt={"score"} />
-            <span className={styles.cardIconInfo}>
-              {recDetails?.healthScore}Pt
-            </span>
-          </div>
-          <div className={styles.cardIconPack}>
-            <img
-              className={styles.cardIcon}
-              src={recDetails?.vegetarian ? vegetarian : nonVeg}
-              alt={"vegan"}
-            />
-            {/* <span className={styles.cardIconInfo}>
+        {isIng || recDetails?.isIng ? (
+          <>
+            {" "}
+            <div className={styles.req}>Also Required</div>
+            <div className={styles.missedIngCont}>
+              {recDetails?.missedIngredients?.map((ing, index) => {
+                if (index < 2) {
+                  return (
+                    <div className={styles.ingCont}>
+                      <div className={styles.ingNum}>{index + 1}</div>
+                      <div className={styles.ingTypo}>{ing?.original}</div>
+                    </div>
+                  );
+                }
+              })}
+            </div>
+          </>
+        ) : (
+          <>
+            {" "}
+            <span
+              className={styles.cardDesc}
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(recDetails?.summary),
+              }}
+            ></span>
+            <div className={styles.cardInfo}>
+              <div className={styles.cardIconPack}>
+                <img className={styles.cardIcon} src={clock} alt={"clock"} />
+                <span className={styles.cardIconInfo}>
+                  {recDetails?.readyInMinutes}min
+                </span>
+              </div>
+              <div className={styles.cardIconPack}>
+                <img className={styles.cardIcon} src={score} alt={"score"} />
+                <span className={styles.cardIconInfo}>
+                  {recDetails?.healthScore}Pt
+                </span>
+              </div>
+              <div className={styles.cardIconPack}>
+                <img
+                  className={styles.cardIcon}
+                  src={recDetails?.vegetarian ? vegetarian : nonVeg}
+                  alt={"vegan"}
+                />
+                {/* <span className={styles.cardIconInfo}>
             {recDetails?.readyInMinutes}min
           </span> */}
-          </div>
-        </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
+
       <img
         onClick={onFavClick}
         className={styles.fav}

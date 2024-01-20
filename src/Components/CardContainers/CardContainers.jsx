@@ -8,6 +8,7 @@ function CardContainers({
   favClickedComp,
   isFav,
   isSearch,
+  isIng,
 }) {
   return (
     <div>
@@ -16,6 +17,7 @@ function CardContainers({
         <div className={isFav ? styles.containerHero2 : styles.containerHero}>
           {dataToShown?.map((rec) => (
             <RecipeCard
+              isIng={isIng}
               isFav={isFav}
               recDetails={rec}
               key={rec?.id}
@@ -27,9 +29,10 @@ function CardContainers({
         </div>
       ) : (
         //on Search show message if cant find recipe
-        isSearch && (
+        isSearch ||
+        (isIng && (
           <div className={styles.noRecipe}>Sorry! No Recipes Found</div>
-        )
+        ))
       )}
     </div>
   );

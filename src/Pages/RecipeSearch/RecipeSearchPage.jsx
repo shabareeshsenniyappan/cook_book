@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import HeaderComponent from "../../Components/HeaderComponent/HeaderComponent";
 import InfiniteScroll from "react-infinite-scroll-component";
 import CardContainers from "../../Components/CardContainers/CardContainers";
-import { getRandomRecipes, getRecipesOnSearch } from "../../Utils/apiServices";
+import {
+  getRandomRecipes,
+  getRecipesOnSearch,
+  getRecipesOnSearchIngredients,
+} from "../../Utils/apiServices";
 import SearchBar from "../../Components/SearchBar/SearchBar";
 import styles from "./recipeSearch.module.css";
 import LoadingComponent from "../../Components/LoadingComponent/LoadingComponent";
@@ -23,6 +27,8 @@ function RecipeSearchPage() {
     cuisines: "",
     type: "",
   });
+  const [isChecked, setIsChecked] = useState(false);
+  const [searchIngredient, setsearchIngredient] = useState([]);
 
   useEffect(() => {
     if (!searchedRecipe) {
@@ -32,6 +38,9 @@ function RecipeSearchPage() {
     }
   }, []);
 
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
+  };
   // Function to handle checkbox change
   const handleCheckboxChange = (e) => {
     if (filetValues?.[e.target.name].includes(e?.target?.value))
@@ -75,20 +84,38 @@ function RecipeSearchPage() {
     toast.success("Favourite Added");
   };
 
+  //onFavClickIng
+  const onFavClickIng = (idToFav) => {
+    const favItems = searchIngredient.filter((item) => item.id === idToFav);
+    favItems[0].isIng = true;
+    setFavRec([...favRec, ...favItems]);
+
+    //kick the toaster
+    toast.success("Favourite Added");
+  };
   // Function to load recipes based on the search input
   const onSearchEntered = async (e) => {
     setsearchedRecipe(e);
     setloading(true);
-    await getRecipesOnSearch(e, offSet?.offset, filetValues)
-      .then((res) => {
-        setoffSet({
-          offset: res?.data?.offset,
-          total: res?.data?.totalResults,
-        });
-        setsearchedRecipeValue([...res?.data?.results]);
-        setloading(false);
-      })
-      .catch((res) => setloading(false));
+    if (isChecked) {
+      await getRecipesOnSearchIngredients(e)
+        .then((res) => {
+          setsearchIngredient([...res?.data]);
+          setloading(false);
+        })
+        .catch((res) => setloading(false));
+    } else {
+      await getRecipesOnSearch(e, offSet?.offset, filetValues)
+        .then((res) => {
+          setoffSet({
+            offset: res?.data?.offset,
+            total: res?.data?.totalResults,
+          });
+          setsearchedRecipeValue([...res?.data?.results]);
+          setloading(false);
+        })
+        .catch((res) => setloading(false));
+    }
   };
 
   // Function to handel infinite scroll on load recipes based on the search input
@@ -125,13 +152,26 @@ function RecipeSearchPage() {
     setshowFilter((prev) => !prev);
   };
 
+  console.log(favRec, "fac");
   return (
     <div>
       <HeaderComponent />
 
       <ToastContainer />
       <div className={styles.searchBar}>
-        <div></div>
+        <div className="toggle-switch-container">
+          <span className={styles.switchLabel}>With recipe</span>
+          <label className="switch">
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={handleToggle}
+            />
+            <span className="slider round"></span>
+          </label>
+          <span className={styles.switchLabel}>With Ingredients</span>
+          {/* <p>{isChecked ? "Enabled" : "Disabled"}</p> */}
+        </div>
         <SearchBar handleEnter={onSearchEntered} />
         {searchedRecipe ? (
           <div className={styles.filterContiner}>
@@ -212,19 +252,28 @@ function RecipeSearchPage() {
       {loading ? (
         <LoadingComponent />
       ) : searchedRecipe ? (
-        <InfiniteScroll
-          dataLength={searchedRecipeValue.length}
-          next={onSearchScrol}
-          hasMore={offSet.total / 10 > offSet.offset}
-          loader={<LoadingComponent />}
-        >
+        isChecked ? (
           <CardContainers
-            isSearch={true}
-            dataToShown={searchedRecipeValue}
-            heading={`Search result - ${searchedRecipe}`}
-            favClickedComp={onFavClick}
+            dataToShown={searchIngredient}
+            heading={"Ing  Recipes"}
+            isIng={true}
+            favClickedComp={onFavClickIng}
           />
-        </InfiniteScroll>
+        ) : (
+          <InfiniteScroll
+            dataLength={searchedRecipeValue.length}
+            next={onSearchScrol}
+            hasMore={offSet.total / 10 > offSet.offset}
+            loader={<LoadingComponent />}
+          >
+            <CardContainers
+              isSearch={true}
+              dataToShown={searchedRecipeValue}
+              heading={`Search result - ${searchedRecipe}`}
+              favClickedComp={onFavClick}
+            />
+          </InfiniteScroll>
+        )
       ) : (
         <InfiniteScroll
           dataLength={randomRec.length}

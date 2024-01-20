@@ -58,3 +58,18 @@ export const getRecipesOnSearch = async (query, offSet, filetValues) => {
     return error;
   }
 };
+
+export const getRecipesOnSearchIngredients = async (query) => {
+  try {
+    const res = axiosInstance.get(`/findByIngredients`, {
+      params: {
+        ingredients: query,
+        number: 12,
+        addRecipeInformation: true,
+      },
+    });
+    return res;
+  } catch (error) {
+    return error;
+  }
+};
