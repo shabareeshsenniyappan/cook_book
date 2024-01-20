@@ -14,11 +14,13 @@
 
 # Initially random recipes are populated from the API
 
-# We can make them `favourite by tapping the favourite` icon on the top right on the recipe card
+# We can make them favourite by `tapping the favourite` icon on the top right on the recipe card
 
 # we can search for the recipe with the `search box` on the top and can make them favourite by tapping fav icon
 
 # `Autocomplete Search Box` is implemented .
+
+# `swith button` is given to search with `ingredients or by recipe`
 
 # Imges are loaded with `Lazy Loading`
 
