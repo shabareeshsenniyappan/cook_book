@@ -1,12 +1,17 @@
 import React from "react";
 import styles from "./headerComponent.module.css";
-import SearchBar from "../SearchBar/SearchBar";
+import cook from "../../Utils/Icons/cooking.png";
+import { useNavigate } from "react-router-dom";
 
 function HeaderComponent() {
+  const navigate = useNavigate();
+  const onLogClick = () => {
+    navigate("/home");
+  };
   return (
-    <div className={styles.headerHeroContainer}>
+    <div className={styles.headerHeroContainer} onClick={onLogClick}>
+      <img src={cook} alt={"cook"} className={styles.logo} />
       Cook Book
-      <SearchBar /> <div></div>
     </div>
   );
 }

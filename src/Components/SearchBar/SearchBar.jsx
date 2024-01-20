@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { searchAutoComplete } from "../../Utils/apiServices";
 import "./searchBar.css";
 import { debounce } from "../../Utils/helperFunctions";
+import { useNavigate } from "react-router-dom";
 
 function SearchBar() {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredOptions, setFilteredOptions] = useState([]);
 
@@ -21,6 +23,11 @@ function SearchBar() {
     );
   };
 
+  const onItemClick = (id, title) => {
+    setSearchTerm(title);
+    navigate(`/detail/${id}`);
+  };
+
   return (
     <div className="search-container">
       <input
@@ -34,7 +41,9 @@ function SearchBar() {
       {filteredOptions && (
         <ul className={"suggestions-list"}>
           {filteredOptions?.map((option) => (
-            <li key={option?.id}>{option?.title}</li>
+            <li onClick={() => onItemClick(option?.id)} key={option?.id}>
+              {option?.title}
+            </li>
           ))}
         </ul>
       )}

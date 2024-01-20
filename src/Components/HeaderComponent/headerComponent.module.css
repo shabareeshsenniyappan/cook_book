@@ -1,17 +1,16 @@
 .headerHeroContainer {
+  cursor: pointer;
   background-color: #2f2f2e;
-  padding: 20px;
+  padding: 10px;
   color: #fff;
   text-transform: uppercase;
-  font-weight: 800;
-  font-size: 36px;
+  font-weight: 700;
+  font-size: 32px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
-
-@media (max-width: 620px) {
-  .headerHeroContainer {
-    flex-direction: column;
-  }
+.logo {
+  height: 45px;
+  width: 45px;
+  margin-right: 8px;
 }

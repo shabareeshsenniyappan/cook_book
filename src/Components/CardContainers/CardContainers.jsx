@@ -1,19 +1,25 @@
-import React from "react";
+import React, { memo } from "react";
 import styles from "./cardContainers.module.css";
 import RecipeCard from "../RecipeCard/RecipeCard";
 
-function CardContainers({ dataToShown }) {
-  console.log(dataToShown, "chk1");
+function CardContainers({ dataToShown, heading, favClickedComp, isFav }) {
   return (
     <div>
-      <div className={styles.heading}>Find The New Recipies</div>
+      <div className={styles.heading}>{heading}</div>
       <div className={styles.containerHero}>
         {dataToShown?.map((rec) => (
-          <RecipeCard recDetails={rec} key={rec?.id} />
+          <RecipeCard
+            isFav={isFav}
+            recDetails={rec}
+            key={rec?.id}
+            favClicked={(e) => {
+              favClickedComp(e);
+            }}
+          />
         ))}
       </div>
     </div>
   );
 }
 
-export default CardContainers;
+export default memo(CardContainers);

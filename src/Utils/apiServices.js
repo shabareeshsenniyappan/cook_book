@@ -28,3 +28,29 @@ export const getRandomRecipes = async (num = 10, offset = 1) => {
     return error;
   }
 };
+
+export const getRecipeDetail = async (id) => {
+  try {
+    const res = axiosInstance.get(`/${id}/information`, {
+      params: {
+        includeNutrition: true,
+      },
+    });
+    return res;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getRecipesOnSearch = async (query) => {
+  try {
+    const res = axiosInstance.get(`/complexSearch`, {
+      params: {
+        query: query,
+      },
+    });
+    return res;
+  } catch (error) {
+    return error;
+  }
+};

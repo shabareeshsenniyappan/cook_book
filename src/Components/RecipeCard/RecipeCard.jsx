@@ -5,12 +5,17 @@ import clock from "../../Utils/Icons/clock.png";
 import score from "../../Utils/Icons/score.png";
 import vegetarian from "../../Utils/Icons/vegetarian.png";
 import nonVeg from "../../Utils/Icons/non-veg.png";
-import fav from "../../Utils/Icons/fav1.png";
-import nonFav from "../../Utils/Icons/fav.png";
+import fav from "../../Utils/Icons/fav.png";
+import nonFav from "../../Utils/Icons/non-fav.png";
 import { useNavigate } from "react-router-dom";
 
-function RecipeCard({ recDetails }) {
+function RecipeCard({ recDetails, favClicked, isFav }) {
   const navigate = useNavigate();
+
+  const onFavClick = (e) => {
+    e.stopPropagation();
+    favClicked(recDetails?.id);
+  };
   return (
     <div
       className={styles.cardContainer}
@@ -56,8 +61,9 @@ function RecipeCard({ recDetails }) {
         </div>
       </div>
       <img
+        onClick={onFavClick}
         className={styles.fav}
-        src={recDetails?.fav ? fav : nonFav}
+        src={isFav ? fav : nonFav}
         alt={"fav"}
       />
     </div>
